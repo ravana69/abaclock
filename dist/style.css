@@ -1,0 +1,78 @@
+.abaclock{
+  --max-beads: 10;
+  --min-beads-gap: 4;
+  container-type: inline-size;
+  display: grid;
+  width: min(30rem, 100%);
+  margin-inline: auto;
+  position: relative;
+  --grad: hsl(0 0% 100% / .25), hsl(0 0% 100% / .5) 25%, hsl(0 0% 0% / .5) 90%;
+  &::before, &::after{
+    content: "";
+    position: absolute;
+    width: 5cqi;
+    background-color: orange;
+    background-image: linear-gradient(90deg, var(--grad));
+    height: 100%;
+    top: 0;
+    border-radius: 5cqi 5cqi 0 0;
+  }
+  &::before { left: 0 }
+  &::after { right: 0 }
+  > time {
+    width: 100%;
+    text-align: center;
+    font-size: 5cqi;
+    color: white;
+    font-family: system-ui, sans-serif;
+  }
+  > [data-beads] {
+    position: relative;
+    display: flex;
+    justify-content: flex-end;
+    margin-inline: 5cqi;
+    margin-block: 1cqi;
+    &:first-of-type{ margin-top: 10cqi}
+    &::before{
+      content: "";
+      position: absolute;
+      inset: 40% 0;
+      background-color: var(--color);
+      background-image: linear-gradient(var(--grad));
+      z-index: -1;
+    }
+
+    > i {
+      width: calc(100% / (var(--max-beads) + var(--min-beads-gap,1)));
+      aspect-ratio: 1/1.5;
+      border-radius:25%;
+      transition: transform 0.5s;
+      background-color: var(--color);
+      background-image: linear-gradient(var(--grad));
+      box-shadow: inset 0 -10px 10px hsl(0 0% 0% /.5);
+      &[data-active=true] {
+        transform: translateX(calc(-100% * (var(--max-beads) - var(--beads, var(--max-beads)) + var(--min-beads-gap,1))));
+      }   
+    }
+  }
+}
+
+*, *::before, *::after { box-sizing: border-box}
+body {
+  margin: 0;
+  padding: 2rem;
+  display: grid;
+  align-items: center;
+  min-height: 100vh;
+  
+}
+body::after{
+  content: "";
+  position: fixed;
+  inset: -8px;
+  background-image: url(https://www.teachhub.com/wp-content/uploads/2020/05/Classroom-Management-for-an-Effective-Learning-Environment-768x512.jpg);
+  background-size: cover;
+  background-position: bottom center;
+  filter: blur(4px);
+  z-index: -1;
+}
